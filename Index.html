@@ -1,0 +1,363 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Siswa Baru - SMA Gemilang</title>
+    
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom CSS */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px; 
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: white;
+            padding: 120px 0 80px 0; 
+            text-align: center;
+        }
+        
+        .hero-section h1 {
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .section-padding {
+            padding: 80px 0;
+        }
+        
+        .card-custom {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .calculator-result {
+            background-color: #f0f9ff;
+            border-left: 5px solid #0284c7;
+            padding: 20px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+        
+        .total-amount {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #059669;
+        }
+        
+        .rincian-text {
+            font-size: 0.9rem;
+            color: #475569;
+            background: #e0f2fe;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Navigasi */
+        .navbar {
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #0284c7 !important;
+        }
+        
+        .btn-primary {
+            background-color: #0284c7;
+            border-color: #0284c7;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0369a1;
+            border-color: #0369a1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#beranda">🏫 SMA Gemilang</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#beranda">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#kalkulator">Kalkulator Biaya</a>
+                    </li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-primary text-white px-4 rounded-pill" href="#pendaftaran">Daftar Sekarang</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h1>Pendaftaran Peserta Didik Baru (PPDB)</h1>
+                    <p class="lead mb-4">Tahun Ajaran 2026/2027. Persiapkan masa depan gemilang putra-putri Anda bersama sekolah dengan fasilitas terbaik dan kurikulum berstandar nasional.</p>
+                    <a href="#pendaftaran" class="btn btn-light btn-lg px-5 rounded-pill shadow-sm fw-bold">Isi Formulir</a>
+                    <a href="#kalkulator" class="btn btn-outline-light btn-lg px-5 rounded-pill ms-2">Hitung Biaya Sekolah</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kalkulator Section -->
+    <section id="kalkulator" class="section-padding bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Kalkulator Biaya Sekolah</h2>
+                <p class="text-muted">Hitung estimasi total biaya masuk sekolah putra/putri Anda.</p>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card card-custom p-4 p-md-5">
+                        <form id="calculatorForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Jalur Pendaftaran (Uang Pangkal)</label>
+                                    <select class="form-select" id="calcJalur">
+                                        <option value="0" selected disabled>Pilih Jalur...</option>
+                                        <option value="1500000">Jalur Prestasi (Rp 1.500.000)</option>
+                                        <option value="3500000">Jalur Reguler (Rp 3.500.000)</option>
+                                        <option value="4500000">Jalur Pindahan (Rp 4.500.000)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Peminatan (SPP per Bulan)</label>
+                                    <select class="form-select" id="calcPeminatan">
+                                        <option value="0" selected disabled>Pilih Peminatan...</option>
+                                        <option value="600000">MIPA (Rp 600.000/bln)</option>
+                                        <option value="550000">IPS (Rp 550.000/bln)</option>
+                                        <option value="500000">Bahasa & Budaya (Rp 500.000/bln)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold text-primary">Durasi Pembayaran SPP Awal</label>
+                                <select class="form-select border-primary" id="calcDurasiSPP">
+                                    <option value="1" selected>Bayar 1 Bulan Pertama</option>
+                                    <option value="6">Bayar 1 Semester (6 Bulan) di Awal</option>
+                                    <option value="12">Lunas 1 Tahun Ajaran (12 Bulan) di Awal</option>
+                                </select>
+                                <small class="text-muted">Pilih berapa bulan SPP yang ingin dibayarkan saat daftar ulang.</small>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold d-block">Paket Tambahan (Sekali Bayar)</label>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="calcSeragam" value="1200000" checked>
+                                    <label class="form-check-label" for="calcSeragam">Paket Seragam 5 Setel (Rp 1.200.000)</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="calcBuku" value="800000">
+                                    <label class="form-check-label" for="calcBuku">Paket Buku Pelajaran Semester 1 (Rp 800.000)</label>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary w-100 py-3 fw-bold fs-5" onclick="hitungBiaya()">Hitung Estimasi Biaya</button>
+                        </form>
+
+                        <div id="hasilKalkulator" class="calculator-result d-none text-center">
+                            <p class="mb-1 text-muted fw-semibold">Total Biaya Daftar Ulang:</p>
+                            <div class="total-amount" id="totalBiayaText">Rp 0</div>
+                            <div class="rincian-text fw-semibold" id="rincianSPPText">Termasuk SPP 1 Bulan</div>
+                            <small class="text-muted mt-3 d-block">*Total sudah mencakup Uang Pangkal, SPP pilihan, dan Paket Tambahan.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pendaftaran Section -->
+    <section id="pendaftaran" class="section-padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0">
+                    <h2 class="fw-bold mb-4">Mari Bergabung Bersama Kami!</h2>
+                    <p class="text-muted mb-4">Lengkapi data diri calon siswa dan orang tua di bawah ini. Pastikan NISN dan data yang dimasukkan sesuai dengan dokumen resmi.</p>
+                </div>
+                
+                <div class="col-lg-7">
+                    <div class="card card-custom p-4 p-md-5 border-top border-primary border-4">
+                        <h4 class="mb-4 fw-bold">Formulir PPDB Online</h4>
+                        <form id="pendaftaranForm" class="needs-validation" novalidate onsubmit="submitPendaftaran(event)">
+                            
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Lengkap Calon Siswa <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="nama" placeholder="Sesuai Akte Kelahiran / Ijazah" required>
+                                <div class="invalid-feedback">Nama lengkap wajib diisi.</div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="nisn" class="form-label">NISN <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="nisn" placeholder="Nomor Induk Siswa Nasional" required>
+                                    <div class="invalid-feedback">NISN wajib diisi.</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="sekolah_asal" class="form-label">Asal SMP/MTs <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="sekolah_asal" placeholder="Contoh: SMPN 1 Gemilang" required>
+                                    <div class="invalid-feedback">Asal sekolah wajib diisi.</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="nama_ortu" class="form-label">Nama Orang Tua <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="nama_ortu" placeholder="Nama Ayah/Ibu/Wali" required>
+                                    <div class="invalid-feedback">Nama orang tua/wali wajib diisi.</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="nohp" class="form-label">No. WhatsApp <span class="text-danger">*</span></label>
+                                    <input type="tel" class="form-control" id="nohp" placeholder="08xxxxxxxxxx" required>
+                                    <div class="invalid-feedback">Nomor WhatsApp wajib diisi.</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="peminatan" class="form-label">Pilihan Peminatan <span class="text-danger">*</span></label>
+                                <select class="form-select" id="peminatan" required>
+                                    <option value="" selected disabled>Pilih salah satu...</option>
+                                    <option value="MIPA">Matematika dan Ilmu Pengetahuan Alam (MIPA)</option>
+                                    <option value="IPS">Ilmu Pengetahuan Sosial (IPS)</option>
+                                    <option value="BHS">Bahasa dan Budaya</option>
+                                </select>
+                                <div class="invalid-feedback">Silakan pilih peminatan.</div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="alamat" class="form-label">Alamat Domisili <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="alamat" rows="2" placeholder="Nama Jalan, RT/RW, Kelurahan, Kecamatan" required></textarea>
+                                <div class="invalid-feedback">Alamat domisili wajib diisi.</div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100 py-3 fw-bold">Kirim Formulir Pendaftaran</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2026 SMA Gemilang. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- Modal Sukses -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-4 border-0" style="border-radius: 15px;">
+                <div class="modal-body">
+                    <h4 class="modal-title mb-2 fw-bold">Pendaftaran Berhasil!</h4>
+                    <p class="text-muted">Terima kasih. Data <strong id="resNama" class="text-dark"></strong> telah masuk.</p>
+                    <button type="button" class="btn btn-primary px-5 mt-2 rounded-pill fw-bold" data-bs-dismiss="modal">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Navigasi HP agar tertutup otomatis saat diklik
+        const navLinks = document.querySelectorAll('.nav-item a');
+        const menuToggle = document.getElementById('navbarNav');
+        navLinks.forEach((link) => {
+            link.addEventListener('click', () => {
+                if(menuToggle.classList.contains('show')) {
+                    new bootstrap.Collapse(menuToggle, {toggle: false}).hide();
+                }
+            });
+        });
+
+        // FUNGSI KALKULATOR
+        function hitungBiaya() {
+            const jalurValue = document.getElementById('calcJalur').value;
+            const peminatanValue = document.getElementById('calcPeminatan').value;
+            const durasiSPPValue = document.getElementById('calcDurasiSPP').value;
+            
+            const seragamCheckbox = document.getElementById('calcSeragam');
+            const bukuCheckbox = document.getElementById('calcBuku');
+            
+            if(jalurValue === "0" || peminatanValue === "0") {
+                alert("Silakan pilih Jalur Pendaftaran dan Peminatan terlebih dahulu.");
+                return;
+            }
+
+            const uangPangkal = parseInt(jalurValue);
+            const sppPerBulan = parseInt(peminatanValue);
+            const jumlahBulan = parseInt(durasiSPPValue);
+            
+            const totalSPP = sppPerBulan * jumlahBulan; 
+
+            const biayaSeragam = seragamCheckbox.checked ? parseInt(seragamCheckbox.value) : 0;
+            const biayaBuku = bukuCheckbox.checked ? parseInt(bukuCheckbox.value) : 0;
+
+            const totalBiaya = uangPangkal + totalSPP + biayaSeragam + biayaBuku;
+
+            const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+            
+            document.getElementById('totalBiayaText').innerText = formatter.format(totalBiaya);
+            document.getElementById('rincianSPPText').innerText = `Telah mencakup SPP untuk ${jumlahBulan} Bulan (${formatter.format(totalSPP)})`;
+            document.getElementById('hasilKalkulator').classList.remove('d-none');
+        }
+
+        // Fungsi Form
+        function submitPendaftaran(event) {
+            event.preventDefault(); 
+            const form = document.getElementById('pendaftaranForm');
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+            document.getElementById('resNama').innerText = document.getElementById('nama').value;
+            new bootstrap.Modal(document.getElementById('successModal')).show();
+            form.reset();
+            form.classList.remove('was-validated');
+        }
+    </script>
+</body>
+</html>
+
+
+```
+  
